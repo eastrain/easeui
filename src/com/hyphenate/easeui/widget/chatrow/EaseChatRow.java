@@ -144,14 +144,16 @@ public abstract class EaseChatRow extends LinearLayout {
                     ackedView.setVisibility(View.VISIBLE);
                     if(message.getChatType()== EMMessage.ChatType.GroupChat){
                         JSONArray memberArray = EaseMessageUtils.getReadMembers(message);
-                        ackedView.setText(memberArray.length()+" 人已读消息");
-                        ackedView.setOnClickListener(new OnClickListener() {
-                            @Override public void onClick(View v) {
-                                Intent intent = new Intent(context, EaseGroupReadActivity.class);
-                                intent.putExtra(EaseConstant.GROUP_READ_MEMBER_ARRAY, message);
-                                context.startActivity(intent);
-                            }
-                        });
+                        if(memberArray != null){
+                            ackedView.setText(memberArray.length()+" 人已读消息");
+                            ackedView.setOnClickListener(new OnClickListener() {
+                                @Override public void onClick(View v) {
+                                    Intent intent = new Intent(context, EaseGroupReadActivity.class);
+                                    intent.putExtra(EaseConstant.GROUP_READ_MEMBER_ARRAY, message);
+                                    context.startActivity(intent);
+                                }
+                            });
+                        }
                     }
                 } else {
                     ackedView.setVisibility(View.INVISIBLE);
