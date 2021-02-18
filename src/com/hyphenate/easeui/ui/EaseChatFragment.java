@@ -204,6 +204,9 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 当新增内容长度为1时采取判断增加的字符是否为@符号
                 if (conversation.getType() == EMConversation.EMConversationType.Chat) {
+                    if(TextUtils.isEmpty(s)){
+                        return;
+                    }
                     if ((System.currentTimeMillis() - mOldTime)
                             > EaseConstant.TIME_INPUT_STATUS) {
                         mOldTime = System.currentTimeMillis();
@@ -705,10 +708,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 if (message.getChatType() == EMMessage.ChatType.GroupChat){
                     List<String> disabledIds = EMClient.getInstance().pushManager().getNoPushGroups();
                     if (disabledIds==null || !disabledIds.contains(message.getTo())){
-
                         EaseUI.getInstance().getNotifier().vibrateAndPlayTone(message);
                     }
-
                 }else {
                     EaseUI.getInstance().getNotifier().vibrateAndPlayTone(message);
                 }

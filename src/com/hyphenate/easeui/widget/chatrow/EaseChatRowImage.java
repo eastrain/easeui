@@ -121,6 +121,9 @@ public class EaseChatRowImage extends EaseChatRowFile{
      * ACK 消息的发送，根据是否发送成功做些相应的操作，这里是把发送失败的消息id和username保存在序列化类中
      */
     private void sendACKMessage() {
+        if (message.direct() != EMMessage.Direct.RECEIVE || message.getChatType() != ChatType.Chat)  {
+            return;
+        }
         try {
             if(EMClient.getInstance().isConnected()){
                 EMClient.getInstance()
